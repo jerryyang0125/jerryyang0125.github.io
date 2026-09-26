@@ -1,10 +1,98 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="zh-Hant">
 <head>
-    <meta charset="utf-8">
-    <title>我的第一個網頁</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="比較不同感光元件、焦段、光圈與拍攝距離下的視角、進光量與背景虛化。">
+  <title>光圈與背景虛化計算器</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Noto+Sans+TC:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Hello, World!</h1>
+  <header class="site-header">
+    <a class="brand" href="#top" aria-label="回到首頁"><span class="brand-mark">JY</span><span>Jerry's Tiny Tools</span></a>
+    <nav><a href="#calculator">攝影工具</a><a href="#notes">怎麼計算</a></nav>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <p class="eyebrow">Tiny tool · 001</p>
+      <h1>光圈數字相同，<br><em>畫面真的一樣嗎？</em></h1>
+      <p class="hero-copy">用兩組實際拍攝條件，比較視角、景深、總進光量，以及背景在照片中會糊成多大的光斑。</p>
+      <a class="primary-button" href="#calculator">開始比較 <span>↓</span></a>
+    </section>
+
+    <section class="calculator" id="calculator">
+      <div class="section-heading">
+        <div><p class="eyebrow">Compare</p><h2>兩組設定，一眼看懂</h2></div>
+        <p>距離皆指鏡頭到主體／背景的距離；背景距離必須大於主體距離。</p>
+      </div>
+
+      <p class="sensor-note">手機尺寸以 1/1.28&quot;、1/2.55&quot; 等光學型式表示，並列出計算用的約略寬高；型式名稱不能直接換算成實際英吋。同一型式的不同感光元件尺寸可能略有差異。</p>
+      <div class="presets" aria-label="快速範例">
+        <button data-preset="apsc">APS-C f/2.8 vs 全片幅 f/2.8</button>
+        <button data-preset="tele">24mm f/4 vs 300mm f/4</button>
+        <button data-preset="distance">5 公尺：24mm vs 105mm</button>
+      </div>
+
+      <div class="comparison-grid">
+        <article class="setup-card setup-a">
+          <div class="card-label"><span>A</span><input id="name-a" value="設定 A" aria-label="設定 A 名稱"></div>
+          <div class="field-grid">
+            <label>感光元件<select id="sensor-a"></select></label>
+            <label>焦段 <span>mm</span><input id="focal-a" type="number" min="1" step="0.1" value="50"></label>
+            <label>光圈 <span>f/</span><input id="aperture-a" type="number" min="0.5" step="0.1" value="2.8"></label>
+            <label>被攝距離 <span>m</span><input id="subject-a" type="number" min="0.1" step="0.1" value="3"></label>
+            <label>背景距離 <span>m</span><input id="background-a" type="number" min="0.2" step="0.5" value="10"></label>
+          </div>
+        </article>
+
+        <article class="setup-card setup-b">
+          <div class="card-label"><span>B</span><input id="name-b" value="設定 B" aria-label="設定 B 名稱"></div>
+          <div class="field-grid">
+            <label>感光元件<select id="sensor-b"></select></label>
+            <label>焦段 <span>mm</span><input id="focal-b" type="number" min="1" step="0.1" value="35"></label>
+            <label>光圈 <span>f/</span><input id="aperture-b" type="number" min="0.5" step="0.1" value="2"></label>
+            <label>被攝距離 <span>m</span><input id="subject-b" type="number" min="0.1" step="0.1" value="3"></label>
+            <label>背景距離 <span>m</span><input id="background-b" type="number" min="0.2" step="0.5" value="10"></label>
+          </div>
+        </article>
+      </div>
+
+      <p class="error" id="error" role="alert"></p>
+      <div class="results" aria-live="polite">
+        <article class="result-feature">
+          <p class="result-kicker">背景虛化比較</p>
+          <div class="blur-visual"><div class="blur-orb orb-a"><span>A</span></div><div class="blur-orb orb-b"><span>B</span></div></div>
+          <h3 id="blur-summary">A 的背景光斑較大</h3>
+          <p id="blur-detail"></p>
+        </article>
+        <div class="result-list">
+          <div class="metric"><span>全片幅等效焦段</span><strong id="eq-focal"></strong><small>用來比較視角</small></div>
+          <div class="metric"><span>全片幅等效光圈</span><strong id="eq-aperture"></strong><small>同構圖下比較景深與總進光</small></div>
+          <div class="metric"><span>水平視角</span><strong id="fov"></strong><small>角度越小，畫面越窄</small></div>
+          <div class="metric"><span>景深範圍</span><strong id="dof"></strong><small>採用感光元件對角線 ÷ 1500 作容許模糊圈</small></div>
+          <div class="metric"><span>單位面積進光</span><strong id="exposure"></strong><small>不計快門、透光率與 ISO</small></div>
+          <div class="metric"><span>整片感光元件總光量</span><strong id="total-light"></strong><small>假設快門、場景亮度與量子效率相同</small></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="notes" id="notes">
+      <p class="eyebrow">Read this first</p>
+      <h2>「等效」其實有兩種問題</h2>
+      <div class="note-grid">
+        <article><span>01</span><h3>曝光亮度看 f 值</h3><p>相同快門下，f/2.8 在不同尺寸感光元件上，每平方毫米接收的光量近似相同；感光元件大小不會把 f/2.8 變成 f/4。</p></article>
+        <article><span>02</span><h3>景深要連構圖一起看</h3><p>維持相同視角與拍攝位置時，等效焦段與等效光圈約為實際數值乘上裁切倍率。例如 APS-C 35mm f/2.8 約等同全片幅 52.5mm f/4.2。</p></article>
+        <article><span>03</span><h3>背景距離非常重要</h3><p>背景離主體越遠，離焦光斑越大。計算器用薄透鏡模型估算感光元件上的模糊圈，再依感光元件對角線正規化比較。</p></article>
+      </div>
+      <p class="fine-print">這是攝影規劃用的近似模型。實際散景也會受到鏡頭設計、入瞳位置、口徑蝕、像差、對焦呼吸與軟體運算攝影影響。</p>
+    </section>
+  </main>
+
+  <footer><span>Jerry's Tiny Tools</span><span>Made for curious comparisons.</span></footer>
+  <script src="app.js"></script>
 </body>
 </html>
