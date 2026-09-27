@@ -1,0 +1,137 @@
+[
+  {
+    "id": "sheet-01",
+    "name": "臺虎",
+    "volume_ml": 500,
+    "abv_percent": 9.9,
+    "price_twd": 66,
+    "sugar_g_100ml": null,
+    "sort_order": 0
+  },
+  {
+    "id": "sheet-02",
+    "name": "生命",
+    "volume_ml": 500,
+    "abv_percent": 96,
+    "price_twd": 589,
+    "sugar_g_100ml": null,
+    "sort_order": 1
+  },
+  {
+    "id": "sheet-03",
+    "name": "福",
+    "volume_ml": 1500,
+    "abv_percent": 40,
+    "price_twd": 439,
+    "sugar_g_100ml": null,
+    "sort_order": 2
+  },
+  {
+    "id": "sheet-04",
+    "name": "高",
+    "volume_ml": 1000,
+    "abv_percent": 58,
+    "price_twd": 379,
+    "sugar_g_100ml": null,
+    "sort_order": 3
+  },
+  {
+    "id": "sheet-05",
+    "name": "米酒頭",
+    "volume_ml": 600,
+    "abv_percent": 34,
+    "price_twd": 134,
+    "sugar_g_100ml": null,
+    "sort_order": 4
+  },
+  {
+    "id": "sheet-06",
+    "name": "美廉啤酒",
+    "volume_ml": 500,
+    "abv_percent": 12,
+    "price_twd": 49.5,
+    "sugar_g_100ml": null,
+    "sort_order": 5
+  },
+  {
+    "id": "sheet-07",
+    "name": "經典台啤 4.5%（整箱 24 罐）",
+    "volume_ml": 12000,
+    "abv_percent": 4.5,
+    "price_twd": 888,
+    "sugar_g_100ml": null,
+    "sort_order": 6
+  },
+  {
+    "id": "sheet-08",
+    "name": "經典台啤 5%（整箱 24 罐）",
+    "volume_ml": 12000,
+    "abv_percent": 5,
+    "price_twd": 960,
+    "sugar_g_100ml": null,
+    "sort_order": 7
+  },
+  {
+    "id": "sheet-09",
+    "name": "白鹿清酒",
+    "volume_ml": 2000,
+    "abv_percent": 13,
+    "price_twd": 419,
+    "sugar_g_100ml": null,
+    "sort_order": 8
+  },
+  {
+    "id": "sheet-10",
+    "name": "燒酒",
+    "volume_ml": 360,
+    "abv_percent": 20,
+    "price_twd": 100,
+    "sugar_g_100ml": null,
+    "sort_order": 9
+  },
+  {
+    "id": "sheet-11",
+    "name": "生命之水",
+    "volume_ml": 500,
+    "abv_percent": 96,
+    "price_twd": 589,
+    "sugar_g_100ml": null,
+    "sort_order": 10
+  },
+  {
+    "id": "sheet-12",
+    "name": "Red lion",
+    "volume_ml": 700,
+    "abv_percent": 40,
+    "price_twd": 229,
+    "sugar_g_100ml": null,
+    "sort_order": 11
+  },
+  {
+    "id": "sheet-13",
+    "name": "米酒純",
+    "volume_ml": 600,
+    "abv_percent": 19.5,
+    "price_twd": 42,
+    "sugar_g_100ml": null,
+    "sort_order": 12
+  },
+  {
+    "id": "sheet-14",
+    "name": "米酒",
+    "volume_ml": 6000,
+    "abv_percent": 20,
+    "price_twd": 239,
+    "sugar_g_100ml": null,
+    "sort_order": 13
+  },
+  {
+    "id": "sheet-15",
+    "name": "四喜燒酎",
+    "volume_ml": 4000,
+    "abv_percent": 25,
+    "price_twd": 890,
+    "sugar_g_100ml": null,
+    "sort_order": 14
+  }
+]

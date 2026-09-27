@@ -13,7 +13,7 @@
 <body>
   <header class="site-header">
     <a class="brand" href="#top" aria-label="回到首頁"><span class="brand-mark">JY</span><span>Jerry's Tiny Tools</span></a>
-    <nav><a href="#calculator">攝影工具</a><a href="#notes">怎麼計算</a></nav>
+    <nav><a href="#calculator" aria-current="page">攝影工具</a><a href="drinks.html">酒款計算機</a></nav>
   </header>
 
   <main id="top">
@@ -32,6 +32,9 @@
 
       <p class="sensor-note">手機尺寸以 1/1.28&quot;、1/2.55&quot; 等光學型式表示，並列出計算用的約略寬高；型式名稱不能直接換算成實際英吋。同一型式的不同感光元件尺寸可能略有差異。</p>
       <div class="presets" aria-label="快速範例">
+        <button data-preset="phones">iPhone 5× vs S23 Ultra 10×</button>
+        <button data-preset="iphoneFull">iPhone 5× vs 全片幅 120mm</button>
+        <button data-preset="samsungFull">S23 Ultra 10× vs 全片幅 230mm</button>
         <button data-preset="apsc">APS-C f/2.8 vs 全片幅 f/2.8</button>
         <button data-preset="tele">24mm f/4 vs 300mm f/4</button>
         <button data-preset="distance">5 公尺：24mm vs 105mm</button>
@@ -41,7 +44,9 @@
         <article class="setup-card setup-a">
           <div class="card-label"><span>A</span><input id="name-a" value="設定 A" aria-label="設定 A 名稱"></div>
           <div class="field-grid">
+            <label>鏡頭預設<select id="device-a" aria-label="A 鏡頭預設"></select></label>
             <label>感光元件<select id="sensor-a"></select></label>
+            <label>焦距輸入方式<select id="mode-a" aria-label="A 焦距輸入方式"><option value="actual">實際焦距</option><option value="equivalent">全片幅等效焦距</option></select></label>
             <label>焦段 <span>mm</span><input id="focal-a" type="number" min="1" step="0.1" value="50"></label>
             <label>光圈 <span>f/</span><input id="aperture-a" type="number" min="0.5" step="0.1" value="2.8"></label>
             <label>被攝距離 <span>m</span><input id="subject-a" type="number" min="0.1" step="0.1" value="3"></label>
@@ -52,7 +57,9 @@
         <article class="setup-card setup-b">
           <div class="card-label"><span>B</span><input id="name-b" value="設定 B" aria-label="設定 B 名稱"></div>
           <div class="field-grid">
+            <label>鏡頭預設<select id="device-b" aria-label="B 鏡頭預設"></select></label>
             <label>感光元件<select id="sensor-b"></select></label>
+            <label>焦距輸入方式<select id="mode-b" aria-label="B 焦距輸入方式"><option value="actual">實際焦距</option><option value="equivalent">全片幅等效焦距</option></select></label>
             <label>焦段 <span>mm</span><input id="focal-b" type="number" min="1" step="0.1" value="35"></label>
             <label>光圈 <span>f/</span><input id="aperture-b" type="number" min="0.5" step="0.1" value="2"></label>
             <label>被攝距離 <span>m</span><input id="subject-b" type="number" min="0.1" step="0.1" value="3"></label>
@@ -62,6 +69,12 @@
       </div>
 
       <p class="error" id="error" role="alert"></p>
+      <div class="presets"><button id="match-full">將 A 換算成 B 的全片幅等效設定</button></div>
+      <p class="sensor-note">等效焦距會依感光元件對角線換算回實際焦距；光圈欄位一律填鏡頭實際 f 值。切換輸入方式會自動換算數字，維持原設定。手機預設只估算光學虛化，不包含人像模式；像素數不直接決定虛化量。</p>
+      <div class="spec-table-wrap" tabindex="0" role="region" aria-label="A 與 B 橫向參數比較">
+        <table class="spec-table"><caption>拍攝參數橫向比較</caption><thead><tr><th scope="col">參數</th><th scope="col" id="spec-name-a">A</th><th scope="col" id="spec-name-b">B</th></tr></thead><tbody id="spec-body"></tbody></table>
+      </div>
+      <p class="sensor-note">不同畫幅比例以相同輸出對角線比較，水平視角可能略有不同。總光量是假設均勻場景、相同快門與透光率的理論值。手機感光元件採約略有效尺寸，非逐機實測。</p>
       <div class="results" aria-live="polite">
         <article class="result-feature">
           <p class="result-kicker">背景虛化比較</p>

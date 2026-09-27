@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="用容量、酒精濃度與價格比較酒款熱量和試算花費。">
+  <title>酒款熱量與花費計算機 · Jerry's Tiny Tools</title>
+  <link rel="stylesheet" href="styles.css"><link rel="stylesheet" href="drinks.css">
+</head>
+<body class="drinks-page">
+  <header class="site-header"><a class="brand" href="index.html"><span class="brand-mark">JY</span><span>Jerry's Tiny Tools</span></a><nav><a href="index.html">攝影工具</a><a href="drinks.html" aria-current="page">酒款計算機</a></nav></header>
+  <main class="drink-main">
+    <section class="drink-hero"><div><p class="eyebrow">Tiny tool · 002 / Drink smarter</p><h1>這一杯，<br>多少熱量、<em>多少錢？</em></h1><p>把試算表變成一眼看懂的酒款比較。<br>調整酒款和份量，看看熱量與荷包的變化。</p></div><div class="hero-stamp" aria-hidden="true"><span>BEHIND<br>THE DRINK.</span><div class="glass"><i></i></div><small>VOL. 002 — 每一杯都有數字</small></div></section>
+    <div class="workspace-heading"><h2>你的酒款實驗室 <span>↘</span></h2><p id="data-status" role="status">正在載入酒款…</p></div>
+    <section class="drink-workspace" aria-label="酒款計算機">
+      <form id="drink-form" class="input-panel" novalidate>
+        <div class="panel-title"><span class="step">01</span><h3>選一款，或自己調整</h3><button id="reset" type="button">重設 ↺</button></div>
+        <label>酒款<select id="drink-select"><option value="custom">自訂酒款</option></select></label>
+        <p id="source-note" class="subtle">可直接輸入酒款資料。</p>
+        <div class="drink-fields">
+          <label>每份容量 <span>ml</span><input id="volume" type="number" min="1" max="100000" step="any" value="500" required></label>
+          <label>酒精濃度 <span>% ABV</span><input id="abv" type="number" min="0" max="100" step="any" value="9.9" required></label>
+          <label>每份價格 <span>NT$</span><input id="price" type="number" min="0" max="1000000" step="any" value="66" required></label>
+          <label>糖量（選填）<span>g / 100ml</span><input id="sugar" type="number" min="0" max="100" step="any" placeholder="未知" aria-describedby="sugar-note"></label>
+        </div>
+        <p id="sugar-note" class="subtle">原表沒有糖量；留白時僅顯示酒精熱量。</p>
+        <div class="quantity-heading"><label for="quantity">飲用份數</label><output id="quantity-label" for="quantity">1 份</output></div>
+        <input id="quantity" type="range" min="0" max="6" value="1" step="0.25"><div class="range-labels"><span>0 份</span><span>3 份</span><span>6 份</span></div>
+        <label class="weight-field">體重 <span>kg · 用於原表花費試算</span><input id="weight" type="number" min="20" max="300" step="any" value="75" required></label>
+        <p id="drink-error" role="alert"></p>
+      </form>
+      <div class="dashboard" id="dashboard" aria-live="polite">
+        <article class="calorie-panel"><div class="panel-title"><span class="step">02</span><h3>熱量看得見</h3><span class="pill" id="calorie-mode">僅酒精</span></div><div class="calorie-content"><div class="calorie-ring" id="calorie-ring"><div><small>這次飲用</small><strong id="calories">—</strong><span>kcal</span></div></div><div class="calorie-legend"><p><i></i>酒精熱量 <b id="alcohol-calories">—</b></p><p><i class="sugar-dot"></i>糖分熱量 <b id="sugar-calories">未知</b></p><div class="alcohol-amount"><strong id="alcohol-grams">—</strong><span>克純酒精</span></div></div></div><p class="subtle" id="calorie-note">僅估算酒精熱量，不代表飲品完整營養標示。</p></article>
+        <div class="cost-grid"><article class="spend-panel"><p class="eyebrow">Your tab</p><h3>這次花費</h3><strong id="cost">—</strong><p id="cost-detail"></p></article><article class="reference-panel"><p class="eyebrow">Spreadsheet estimate</p><h3>「喝醉要多少錢？」</h3><strong id="reference-cost">—</strong><p id="reference-detail"></p><small>沿用原表「微醉」係數 1.2；不預測實際醉意。</small></article></div>
+      </div>
+    </section>
+    <section class="compare-panel"><div class="compare-title"><div><p class="eyebrow">Side by side</p><h2>換一款，差多少？</h2></div><label>比較指標<select id="compare-mode"><option value="calories">每 100ml 酒精熱量</option><option value="referenceCost">原表「微醉」花費</option><option value="price">每份價格</option></select></label></div><p class="subtle">依試算表順序排列；熱量不含糖分，價格為原表參考值，非即時售價。</p><div id="comparison" class="comparison-bars"></div></section>
+    <section class="method-panel" id="method"><p class="eyebrow">Under the numbers</p><h2>數字怎麼來的</h2><div class="method-grid"><article><span>01 / 熱量</span><h3>先把毫升換成克</h3><p>純酒精克數 = 容量 × 濃度 ÷ 100 × 0.789 × 份數。酒精每克約 7 kcal；已填糖量則另加每克 4 kcal。其他營養成分未計入。</p></article><article><span>02 / 花費</span><h3>忠實呈現原表試算</h3><p>原表「微醉」份數 = 體重 × 1.2 ÷（容量 × 濃度 ÷ 100）。按比例花費 = 份數 × 單價；整份購買則將份數無條件進位。</p></article><article><span>03 / 估算限制</span><h3>醉意沒有固定價目表</h3><p>原表係數不是醫學標準，未考慮時間、食物、代謝或個體差異，不能判定安全飲酒量或能否開車。飲酒後不開車。</p></article></div><p class="source-links"><a href="https://docs.google.com/spreadsheets/d/1UPAgXNhhi6cMgHIBii5CfpqOb5altvb4Jef5Sp4wMOI/edit" target="_blank" rel="noreferrer">查看原始試算表 ↗</a><a href="https://rethinkingdrinking.niaaa.nih.gov/tools/calculators" target="_blank" rel="noreferrer">NIAAA 酒精與熱量資料 ↗</a><a href="docs/database.md">資料庫串接步驟 ↗</a></p></section>
+  </main><footer><span>Jerry's Tiny Tools</span><span>Made for curious comparisons.</span></footer>
+  <script src="config.js"></script><script type="module" src="drinks.mjs"></script>
+</body></html>
