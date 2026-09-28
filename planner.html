@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>構圖與選鏡工作台 · Jerry's Tiny Tools</title>
+  <meta name="description" content="用你的鏡頭規劃人物構圖、拍攝距離與曝光，探索自拍、透視和 Dolly Zoom。">
+  <link rel="stylesheet" href="styles.css"><link rel="stylesheet" href="planner.css">
+</head>
+<body>
+<header class="site-header"><a class="brand" href="index.html"><span class="brand-mark">JY</span>Jerry's Tiny Tools</a><nav><a href="index.html">虛化比較</a><a href="planner.html" aria-current="page">構圖與選鏡</a><a href="drinks.html">酒款</a></nav></header>
+<main class="planner-shell">
+  <section class="planner-intro"><div><p class="eyebrow">Tiny tool · 003 / Frame your next shot</p><h1>先想畫面，<em>再選鏡頭。</em></h1><p>從你的站位出發，看鏡頭拍得下什麼、人物多大，以及還能往哪裡走。</p></div><button id="open-gear" class="accent">我的器材庫 ↗</button></section>
+  <div class="planner-tabs" role="tablist" aria-label="工作模式">
+    <button role="tab" id="tab-venue" data-tab="venue" aria-controls="panel-venue" aria-selected="true">01 場合選鏡</button>
+    <button role="tab" id="tab-frame" data-tab="frame" aria-controls="panel-frame" aria-selected="false">02 構圖與自拍</button>
+    <button role="tab" id="tab-photo" data-tab="photo" aria-controls="panel-photo" aria-selected="false">03 照片反推</button>
+    <button role="tab" id="tab-perspective" data-tab="perspective" aria-controls="panel-perspective" aria-selected="false">04 透視實驗</button>
+    <button role="tab" id="tab-dolly" data-tab="dolly" aria-controls="panel-dolly" aria-selected="false">05 Dolly Zoom</button>
+  </div>
+  <p id="planner-error" role="alert"></p>
+  <div class="workbench">
+    <aside class="controls">
+      <h2>拍攝設定</h2>
+      <label>機身<select id="body"></select></label>
+      <label>鏡頭<select id="lens"></select></label>
+      <p id="lens-info" class="hint"></p>
+      <div class="two"><label>焦距輸入<select id="focal-mode"><option value="actual">實際焦距</option><option value="equivalent">全片幅等效</option></select></label><label>焦距 mm<input id="focal" type="number" min=".1" max="3000" step="any" value="50"></label></div>
+      <input id="focal-slider" type="range" min="1" max="300" value="50" step=".1" aria-label="焦距滑桿">
+      <div class="two"><label>實際光圈 f/<input id="aperture" type="number" min=".5" max="128" step="any" value="4"></label><label>主體距離 m<input id="distance" type="number" min=".1" max="1000" step="any" value="4"></label></div>
+      <div class="two"><label>方向<select id="orientation"><option value="landscape">橫幅</option><option value="portrait">直幅</option></select></label><label>畫面比例<select id="ratio"><option value="0">原生比例</option><option value="1.5">3:2</option><option value="1.3333333333">4:3</option><option value="1.7777777778">16:9</option><option value="1">1:1</option></select></label></div>
+      <label>成像模式<select id="video-mode"><option value="photo">照片／原生畫幅</option><option value="fullvideo">影片：全寬 16:9（需確認模式支援）</option><option value="s35">A7 IV 4K 50/60p：Super 35</option><option value="custom">影片：自訂中央裁切</option></select></label>
+      <div class="two"><label>影片中央裁切倍率<input id="video-crop" type="number" min="1" max="10" step=".01" value="1" disabled></label><label>額外數位裁切<input id="extra-crop" type="number" min="1" max="10" step=".01" value="1"></label></div>
+      <p id="sensor-info" class="hint"></p>
+      <details open><summary>人物與背景</summary>
+        <div class="two"><label>構圖<select id="shot"><option value="full">全身／整團</option><option value="half">半身</option></select></label><label>目標佔比 %<input id="fill" type="number" min="10" max="100" value="85"></label></div>
+        <div class="two"><label>身高 cm<input id="height" type="number" min="30" max="250" value="170"></label><label>頭頂至腰 cm<input id="half-height" type="number" min="20" max="150" value="85"></label></div>
+        <div class="two"><label>肩寬 cm<input id="shoulder" type="number" min="15" max="100" value="45"></label><label>人數<input id="count" type="number" min="1" max="20" value="1"></label></div>
+        <div class="two"><label>排列排數<input id="rows" type="number" min="1" max="5" value="1"></label><label>左右間隔 cm<input id="gap" type="number" min="0" max="200" value="25"></label></div>
+        <label>主體到背景 m<input id="background-gap" type="number" min=".1" max="1000" step=".1" value="10"></label>
+      </details>
+      <details><summary>光線、快門與活動範圍</summary>
+        <div class="two"><label>場景 EV100<input id="ev" type="number" min="-6" max="20" step=".1" value="10"></label><label>快門 1 / 秒<input id="shutter" type="number" min="1" max="32000" value="250"></label></div>
+        <div class="two"><label>最近站位 m<input id="near" type="number" min=".1" max="1000" step=".1" value="1"></label><label>最遠站位 m<input id="far" type="number" min=".1" max="1000" step=".1" value="10"></label></div>
+        <label class="check"><input id="adapter" type="checkbox" checked> 有 EF–EOS R 轉接環</label>
+      </details>
+      <a id="blur-link" class="outline-button" href="index.html#calculator">帶入虛化比較 ↗</a>
+    </aside>
+    <div class="workspace">
+      <section id="panel-venue" role="tabpanel" aria-labelledby="tab-venue">
+        <div class="panel-heading"><div><p class="eyebrow">Choose your scene</p><h2>這次站在哪裡？</h2></div><label>場合<select id="scenario"></select></label></div>
+        <p class="hint">場合的距離、光線與快門都是可調整的示範情境，不是場館實測。半身／全身與橫豎設定由拍攝設定區控制。</p>
+        <div class="toolbar"><label>選鏡範圍<select id="scope"><option value="current">目前機身</option><option value="all">全部已啟用器材</option></select></label><button id="refresh-recommendations">更新選鏡</button></div>
+      </section>
+      <section id="panel-frame" role="tabpanel" aria-labelledby="tab-frame" hidden>
+        <div class="panel-heading"><div><p class="eyebrow">Distance makes the frame</p><h2>構圖與自拍</h2></div></div>
+        <label>操作方式<select id="solve"><option value="free">固定位置換焦段</option><option value="distance">固定人物大小，求距離</option><option value="focal">固定距離，求焦段</option></select></label>
+        <div class="toolbar"><button id="selfie">自拍：距離 60cm＋半身</button><label>鏡頭到臉 cm<input id="selfie-distance" type="range" min="25" max="120" step="1" value="60"></label><output id="selfie-value">60 cm</output></div>
+        <p class="hint">自拍滑桿指鏡頭到臉的距離；前鏡頭請從鏡頭選單選擇。背景數字指設定的背景平面，不等於真實照片的背景辨識。</p>
+      </section>
+      <section id="panel-photo" role="tabpanel" aria-labelledby="tab-photo" hidden>
+        <div class="panel-heading"><div><p class="eyebrow">Reverse the frame</p><h2>從照片反推拍攝位置</h2></div><button id="clear-photo">清除照片</button></div>
+        <label>選擇照片（僅在本機處理）<input id="photo-file" type="file" accept="image/jpeg,image/png,image/webp"></label>
+        <p class="hint">拖曳框出已知高度的區域；手指可框選。只拍到半身，就填頭頂到腰部的高度。距離為正面、近似同平面估算。</p>
+        <div class="photo-stage"><canvas id="photo-canvas" width="1000" height="650" aria-label="照片框選區域"></canvas></div>
+        <div class="two"><label>已知條件<select id="infer-mode"><option value="focal">已知目前焦距 → 求距離</option><option value="distance">已知距離 → 求焦距</option><option value="unknown">兩者未知 → 可能組合</option></select></label><label>框選高度佔比 %<input id="photo-fraction" type="number" min=".1" max="100" step=".1" value="85"></label></div>
+        <div class="two"><label>區域實際高度下限 cm<input id="photo-hmin" type="number" min="1" value="165"></label><label>區域實際高度上限 cm<input id="photo-hmax" type="number" min="1" value="175"></label></div>
+        <div class="two"><label>已知距離下限 m<input id="photo-dmin" type="number" min=".01" step=".1" value="4"></label><label>已知距離上限 m<input id="photo-dmax" type="number" min=".01" step=".1" value="5"></label></div>
+        <div class="two"><label>後製裁切<select id="photo-crop-known"><option value="known">已知倍率／未裁切</option><option value="unknown">倍率未知</option></select></label><label>後製中央裁切倍率<input id="photo-crop" type="number" min="1" max="20" step=".1" value="1"></label></div>
+        <p id="photo-result" class="readout" aria-live="polite"></p>
+        <svg id="photo-curve" viewBox="0 0 600 220" role="img" aria-label="可能焦距與距離範圍"></svg>
+      </section>
+      <section id="panel-perspective" role="tabpanel" aria-labelledby="tab-perspective" hidden>
+        <div class="panel-heading"><div><p class="eyebrow">Perspective is a position</p><h2>透視與背景壓縮</h2></div></div>
+        <div class="two"><label>比較模式<select id="perspective-mode"><option value="fixed">固定機位，改焦段</option><option value="matched">維持人物大小，移動機位</option></select></label><label>B 實際焦距 mm<input id="compare-focal" type="number" min="1" max="2000" step="1" value="105"></label></div>
+        <div class="two"><label>模型<select id="model"><option value="body">完整人物</option><option value="head">頭部特寫</option></select></label><label>臉部角度<select id="face-angle"><option value="0">正面</option><option value="45">三分之四（45°）</option></select></label></div>
+        <label>人物在畫面的位置<input id="face-position" type="range" min="0" max=".85" step=".01" value="0"></label>
+        <div class="toolbar"><button id="head-demo">近距離臉部示範</button><button id="compression-demo">背景壓縮示範</button></div>
+        <p class="hint">模型有實際的前後深度。固定位置只變焦，透視比例不變；為維持構圖而改變距離，鼻子、耳朵與背景的相對比例才會變。這不是桶狀變形或手機美顏模擬。</p>
+      </section>
+      <section id="panel-dolly" role="tabpanel" aria-labelledby="tab-dolly" hidden>
+        <div class="panel-heading"><div><p class="eyebrow">Move & zoom</p><h2>Dolly Zoom 路徑</h2></div></div>
+        <div class="two"><label>起始實際焦距 mm<input id="dolly-start" type="number" min="1" value="35" step="any"></label><label>結束實際焦距 mm<input id="dolly-end" type="number" min="1" value="150" step="any"></label></div>
+        <div class="two"><label>起始距離 m<input id="dolly-distance" type="number" min=".1" step=".1" value="3"></label><label>片長 秒<input id="duration" type="number" min="1" max="120" value="6"></label></div>
+        <label>路徑進度<input id="progress" type="range" min="0" max="1" step=".001" value="0"></label>
+        <div class="toolbar"><button id="play">播放</button><button id="reverse">反向播放</button><button id="pause">暫停</button><label>曝光方式<select id="dolly-exposure"><option value="auto">依最大光圈範圍估算 ISO</option><option value="fixed">使用左側指定光圈</option></select></label></div>
+        <p id="dolly-result" class="readout"></p><svg id="dolly-path" viewBox="0 0 600 90" role="img" aria-label="Dolly Zoom 可行與不可行路段"></svg>
+      </section>
+      <section class="visuals" id="visuals" aria-label="聯動取景示意">
+        <div class="view-grid"><figure><figcaption id="view-a-title">A · 目前取景</figcaption><div id="view-a" class="view"></div></figure><figure id="compare-figure" hidden><figcaption id="view-b-title">B · 比較取景</figcaption><div id="view-b" class="view"></div></figure></div>
+        <p id="render-status" class="hint"></p>
+        <div id="metrics" class="metrics" aria-live="polite"></div>
+        <figure class="map-figure"><figcaption>拍攝位置 · 左：俯視 / 右：側視（示意比例）</figcaption><canvas id="map" width="1000" height="230" aria-label="鏡頭、人物與背景位置圖"></canvas></figure>
+      </section>
+      <section id="recommendations-panel"><h2>你的鏡頭，拍得到什麼？</h2><p class="hint">按可行性、數位裁切需求、構圖餘裕及所需 ISO 排序。可釘選兩組；點「套用」查看取景。</p><div id="pins" class="pins"></div><div id="recommendations" class="recommendations"></div></section>
+    </div>
+  </div>
+  <section class="planner-method"><h2>畫面是幾何，現場還有變數。</h2><p>構圖採直線投影：涵蓋高度 = 拍攝距離 × 有效感光高度 ÷ 實際焦距。人物每個部位按各自深度投影；背景中的方塊與人物使用公尺尺度。近距離、對焦呼吸、鏡頭校正與手機防震裁切可能使實拍不同。</p><p>曝光為單次曝光估算，不包括透光率、手機多幀運算及測光差異。防手震可減少手震，但不會凍結主體動作。直拍與高幀率錄影請確認機身實際裁切模式。</p><a href="docs/planner.md">資料來源與計算說明 ↗</a></section>
+</main>
+<dialog id="gear-dialog">
+  <form method="dialog"><button class="close" aria-label="關閉器材庫">關閉 ×</button></form>
+  <p class="eyebrow">Your gear, your possibilities</p><h2>我的器材庫</h2><p id="storage-status" class="hint"></p>
+  <div class="toolbar"><button id="export-gear">匯出 JSON</button><label class="file-button">匯入 JSON<input id="import-gear" type="file" accept="application/json"></label><button id="reset-gear">還原預設</button></div>
+  <div id="gear-list"></div>
+  <form id="gear-form">
+    <h3>新增／編輯器材</h3><input id="gear-id" type="hidden">
+    <div class="two"><label>類型<select id="gear-type"><option value="lens">鏡頭</option><option value="body">機身</option></select></label><label>名稱<input id="gear-name" required maxlength="160"></label></div>
+    <div class="two"><label>接環<select id="gear-mount"><option>EF</option><option>EF-S</option><option>RF</option><option>E</option><option>Z</option><option value="phone">phone</option></select></label><label>手機所屬機身<select id="gear-owner"></select></label></div>
+    <div class="two"><label>感光寬 mm（機身／手機鏡頭）<input id="gear-width" type="number" min=".1" step="any" value="36"></label><label>感光高 mm<input id="gear-height" type="number" min=".1" step="any" value="24"></label></div>
+    <div class="two"><label>最短實際焦距 mm<input id="gear-min" type="number" min=".1" step="any" value="24"></label><label>最長實際焦距 mm<input id="gear-max" type="number" min=".1" step="any" value="70"></label></div>
+    <div class="two"><label>廣角端最大光圈 f/<input id="gear-wide" type="number" min=".5" step="any" value="2.8"></label><label>望遠端最大光圈 f/<input id="gear-tele" type="number" min=".5" step="any" value="2.8"></label></div>
+    <div class="two"><label>最近對焦 m（空白＝未知）<input id="gear-mfd" type="number" min=".01" step="any"></label><label>手機內建裁切倍率<input id="gear-digital" type="number" min="1" step="any" value="1"></label></div>
+    <div class="toolbar"><button type="submit" class="accent">儲存器材</button><button id="new-gear" type="button">清空／新增</button></div><p id="gear-error" role="alert"></p>
+  </form>
+</dialog>
+<script type="module" src="planner.mjs"></script>
+</body></html>

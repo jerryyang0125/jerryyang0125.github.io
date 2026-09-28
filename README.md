@@ -4,6 +4,8 @@
 
 ## 本機預覽
 
+第三個工具「[構圖與選鏡工作台](planner.html)」支援個人器材庫、場合選鏡、構圖／自拍、照片框選反推、3D 透視實驗與 Dolly Zoom。資料來源、模型限制與儲存格式見 [工作台說明](docs/planner.md)。
+
 ```bash
 python3 -m http.server 8000
 ```
